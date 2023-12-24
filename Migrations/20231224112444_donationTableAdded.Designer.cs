@@ -4,6 +4,7 @@ using MatrimonyWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatrimonyWebApi.Migrations
 {
     [DbContext(typeof(MatrimonyDbContext))]
-    partial class MatrimonyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231224112444_donationTableAdded")]
+    partial class donationTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,40 +189,6 @@ namespace MatrimonyWebApi.Migrations
                         {
                             GenderId = 3,
                             Gender = "Other"
-                        });
-                });
-
-            modelBuilder.Entity("MatrimonyWebApi.Models.InterestStatusMaster", b =>
-                {
-                    b.Property<int>("InterestStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InterestStatusId"));
-
-                    b.Property<string>("InterestStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("InterestStatusId");
-
-                    b.ToTable("InterestStatusMasters");
-
-                    b.HasData(
-                        new
-                        {
-                            InterestStatusId = 1,
-                            InterestStatus = "Open"
-                        },
-                        new
-                        {
-                            InterestStatusId = 2,
-                            InterestStatus = "Accepted"
-                        },
-                        new
-                        {
-                            InterestStatusId = 3,
-                            InterestStatus = "Rejected"
                         });
                 });
 

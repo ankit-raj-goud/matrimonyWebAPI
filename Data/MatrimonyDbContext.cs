@@ -18,6 +18,9 @@ namespace MatrimonyWebApi.Data
         public DbSet<CasteMaster> CasteMasters{ get; set; }
         public DbSet<GenderMaster> GenderMasters{ get; set; }
         public DbSet<MaritialStatusMaster> MaritialStatusMasters{ get; set; }
+        public DbSet<AdminMaster> AdminMasters{ get; set; }
+        public DbSet<Donation> Donations { get; set; }
+        public DbSet<InterestStatusMaster> InterestStatusMasters { get; set; }
 
         //seeding data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -80,6 +83,37 @@ namespace MatrimonyWebApi.Data
             };
 
             modelBuilder.Entity<MaritialStatusMaster>().HasData(maritialStatusList);
+
+            //admin master
+            modelBuilder.Entity<AdminMaster>()
+                .HasData(new AdminMaster
+                {
+                    UserId = Guid.Parse("dd467971-80d6-43a6-a1ab-8b64cd25dedd"),
+                    UserName = "admin",
+                    Password = "admin"
+                });
+
+            //interest status master
+            var interestStatusList = new List<InterestStatusMaster>
+            {
+                new InterestStatusMaster
+                {
+                    InterestStatusId = 1,
+                    InterestStatus = "Open"
+                },
+                new InterestStatusMaster
+                {
+                    InterestStatusId = 2,
+                    InterestStatus = "Accepted"
+                },
+                new InterestStatusMaster
+                {
+                    InterestStatusId = 3,
+                    InterestStatus = "Rejected"
+                }
+            };
+
+            modelBuilder.Entity<InterestStatusMaster>().HasData(interestStatusList);
         }
     }
 }

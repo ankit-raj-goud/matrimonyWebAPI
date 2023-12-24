@@ -4,6 +4,7 @@ using MatrimonyWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatrimonyWebApi.Migrations
 {
     [DbContext(typeof(MatrimonyDbContext))]
-    partial class MatrimonyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231224111556_adminMasterAdded")]
+    partial class adminMasterAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,44 +121,6 @@ namespace MatrimonyWebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MatrimonyWebApi.Models.Donation", b =>
-                {
-                    b.Property<int>("DonationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CityMasterCityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("DonerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DonationId");
-
-                    b.HasIndex("CityMasterCityId");
-
-                    b.ToTable("Donations");
-                });
-
             modelBuilder.Entity("MatrimonyWebApi.Models.GenderMaster", b =>
                 {
                     b.Property<int>("GenderId")
@@ -186,40 +151,6 @@ namespace MatrimonyWebApi.Migrations
                         {
                             GenderId = 3,
                             Gender = "Other"
-                        });
-                });
-
-            modelBuilder.Entity("MatrimonyWebApi.Models.InterestStatusMaster", b =>
-                {
-                    b.Property<int>("InterestStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InterestStatusId"));
-
-                    b.Property<string>("InterestStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("InterestStatusId");
-
-                    b.ToTable("InterestStatusMasters");
-
-                    b.HasData(
-                        new
-                        {
-                            InterestStatusId = 1,
-                            InterestStatus = "Open"
-                        },
-                        new
-                        {
-                            InterestStatusId = 2,
-                            InterestStatus = "Accepted"
-                        },
-                        new
-                        {
-                            InterestStatusId = 3,
-                            InterestStatus = "Rejected"
                         });
                 });
 
@@ -320,15 +251,6 @@ namespace MatrimonyWebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("StateMaster");
-                });
-
-            modelBuilder.Entity("MatrimonyWebApi.Models.Donation", b =>
-                {
-                    b.HasOne("MatrimonyWebApi.Models.CityMaster", "CityMaster")
-                        .WithMany()
-                        .HasForeignKey("CityMasterCityId");
-
-                    b.Navigation("CityMaster");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.StateMaster", b =>
