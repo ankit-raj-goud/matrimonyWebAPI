@@ -7,7 +7,7 @@ namespace MatrimonyWebApi.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CoutnryId { get; set; }
+        public int CountryId { get; set; }
         public string? CountryName { get; set; }
     }
 }

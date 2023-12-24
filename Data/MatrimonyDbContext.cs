@@ -28,7 +28,7 @@ namespace MatrimonyWebApi.Data
             base.OnModelCreating(modelBuilder);
 
             //seed data for country master
-            modelBuilder.Entity<Country>().HasData(new Country { CoutnryId = 1 , CountryName = "India" });
+            modelBuilder.Entity<Country>().HasData(new Country { CountryId = 1 , CountryName = "India" });
 
             //seed data for Religion Master
             modelBuilder.Entity<ReligionMaster>()

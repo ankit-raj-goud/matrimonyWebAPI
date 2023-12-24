@@ -1,4 +1,6 @@
 using MatrimonyWebApi.Data;
+using MatrimonyWebApi.Implementations;
+using MatrimonyWebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddSwaggerGen();
 //adding connection string
 builder.Services.AddDbContext<MatrimonyDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("MatrimonyConnectionString")));
+
+//repository implementations
+builder.Services.AddScoped<ICountryRepository, BaseCountry>();
 
 var app = builder.Build();
 
