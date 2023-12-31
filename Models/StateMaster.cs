@@ -13,7 +13,10 @@ namespace MatrimonyWebApi.Models
 
         //country master ref
         [Required]        
-        public int CoutnryId { get; set; }
-        public Country Country { get; set; }
+        public int CountryIdRef { get; set; }
+        public CountryMaster Country { get; set; }
+
+        public ICollection<CityMaster>Cities { get; set; }
+        
     }
 }

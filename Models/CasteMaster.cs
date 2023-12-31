@@ -11,7 +11,7 @@ namespace MatrimonyWebApi.Models
 
         //religion master ref
         [Required]        
-        public Guid ReligionId { get; set; }
+        public Guid ReligionIdRef { get; set; }
         public ReligionMaster?  ReligionMaster{ get; set; }
     }
 }

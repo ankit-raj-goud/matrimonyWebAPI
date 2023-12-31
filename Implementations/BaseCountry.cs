@@ -21,7 +21,7 @@ namespace MatrimonyWebApi.Implementations
             {
                 if (request.CountryName != null && request.CountryName.Length != 0)
                 {
-                    var data = new Country
+                    var data = new CountryMaster
                     {                        
                         CountryName = request.CountryName
                     };
@@ -72,10 +72,10 @@ namespace MatrimonyWebApi.Implementations
                     throw new KeyNotFoundException("invalid id");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                throw;
             }
         }
 
@@ -125,9 +125,9 @@ namespace MatrimonyWebApi.Implementations
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
         }

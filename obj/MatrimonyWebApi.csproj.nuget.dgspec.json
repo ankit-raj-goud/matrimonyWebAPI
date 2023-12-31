@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Matrimony project\\matrimonyWebAPI\\MatrimonyWebApi\\MatrimonyWebApi.csproj": {}
+    "D:\\Matrimony Project\\MatrimonyWebApi\\MatrimonyWebApi.csproj": {}
   },
   "projects": {
-    "D:\\Matrimony project\\matrimonyWebAPI\\MatrimonyWebApi\\MatrimonyWebApi.csproj": {
+    "D:\\Matrimony Project\\MatrimonyWebApi\\MatrimonyWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Matrimony project\\matrimonyWebAPI\\MatrimonyWebApi\\MatrimonyWebApi.csproj",
+        "projectUniqueName": "D:\\Matrimony Project\\MatrimonyWebApi\\MatrimonyWebApi.csproj",
         "projectName": "MatrimonyWebApi",
-        "projectPath": "D:\\Matrimony project\\matrimonyWebAPI\\MatrimonyWebApi\\MatrimonyWebApi.csproj",
-        "packagesPath": "C:\\Users\\Andy\\.nuget\\packages\\",
-        "outputPath": "D:\\Matrimony project\\matrimonyWebAPI\\MatrimonyWebApi\\obj\\",
+        "projectPath": "D:\\Matrimony Project\\MatrimonyWebApi\\MatrimonyWebApi.csproj",
+        "packagesPath": "C:\\Users\\Ankit\\.nuget\\packages\\",
+        "outputPath": "D:\\Matrimony Project\\MatrimonyWebApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Andy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ankit\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -18,6 +18,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("MatrimonyConnect
 
 //repository implementations
 builder.Services.AddScoped<ICountryRepository, BaseCountry>();
+builder.Services.AddScoped<IStateRepository, BaseStateMaster>();
+builder.Services.AddScoped<ICityRepository, BaseCityMaster>();
+builder.Services.AddScoped<IReligionRepository, BaseReligionMaster>();
 
 var app = builder.Build();
 

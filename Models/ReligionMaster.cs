@@ -7,5 +7,7 @@ namespace MatrimonyWebApi.Models
         [Key]
         public Guid ReligionId { get; set; }
         public string? ReligionName { get; set; }
+
+        public ICollection<CasteMaster> Castes { get; set; }
     }
 }

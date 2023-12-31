@@ -58,15 +58,12 @@ namespace MatrimonyWebApi.Migrations
                     b.Property<string>("CasteName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ReligionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ReligionMasterReligionId")
+                    b.Property<Guid>("ReligionIdRef")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CasteId");
 
-                    b.HasIndex("ReligionMasterReligionId");
+                    b.HasIndex("ReligionIdRef");
 
                     b.ToTable("CasteMasters");
                 });
@@ -82,20 +79,17 @@ namespace MatrimonyWebApi.Migrations
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StateMasterStateId")
+                    b.Property<int>("StateIdRef")
                         .HasColumnType("int");
 
                     b.HasKey("CityId");
 
-                    b.HasIndex("StateMasterStateId");
+                    b.HasIndex("StateIdRef");
 
                     b.ToTable("CityMasters");
                 });
 
-            modelBuilder.Entity("MatrimonyWebApi.Models.Country", b =>
+            modelBuilder.Entity("MatrimonyWebApi.Models.CountryMaster", b =>
                 {
                     b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd()
@@ -286,10 +280,7 @@ namespace MatrimonyWebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CoutnryId")
+                    b.Property<int>("CountryIdRef")
                         .HasColumnType("int");
 
                     b.Property<string>("StateName")
@@ -297,7 +288,7 @@ namespace MatrimonyWebApi.Migrations
 
                     b.HasKey("StateId");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryIdRef");
 
                     b.ToTable("StateMasters");
                 });
@@ -305,8 +296,10 @@ namespace MatrimonyWebApi.Migrations
             modelBuilder.Entity("MatrimonyWebApi.Models.CasteMaster", b =>
                 {
                     b.HasOne("MatrimonyWebApi.Models.ReligionMaster", "ReligionMaster")
-                        .WithMany()
-                        .HasForeignKey("ReligionMasterReligionId");
+                        .WithMany("Castes")
+                        .HasForeignKey("ReligionIdRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ReligionMaster");
                 });
@@ -314,8 +307,8 @@ namespace MatrimonyWebApi.Migrations
             modelBuilder.Entity("MatrimonyWebApi.Models.CityMaster", b =>
                 {
                     b.HasOne("MatrimonyWebApi.Models.StateMaster", "StateMaster")
-                        .WithMany()
-                        .HasForeignKey("StateMasterStateId")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateIdRef")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -333,13 +326,28 @@ namespace MatrimonyWebApi.Migrations
 
             modelBuilder.Entity("MatrimonyWebApi.Models.StateMaster", b =>
                 {
-                    b.HasOne("MatrimonyWebApi.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
+                    b.HasOne("MatrimonyWebApi.Models.CountryMaster", "Country")
+                        .WithMany("States")
+                        .HasForeignKey("CountryIdRef")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.CountryMaster", b =>
+                {
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.ReligionMaster", b =>
+                {
+                    b.Navigation("Castes");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.StateMaster", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }

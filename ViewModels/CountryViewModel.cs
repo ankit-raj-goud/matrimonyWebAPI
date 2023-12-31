@@ -2,13 +2,10 @@
 
 namespace MatrimonyWebApi.ViewModels
 {
-    public class CountryRequest : Country
-    {
-        public new int? CountryId
-        {
-            get { return base.CountryId; }
-            set { base.CountryId = value.Value; }
-        }
+    public class CountryRequest
+    { 
+        public int? CountryId { get; set; }
+        public string? CountryName { get; set; }
     }
 
     public class CountryResponse : CountryRequest
