@@ -21,6 +21,7 @@ builder.Services.AddScoped<ICountryRepository, BaseCountry>();
 builder.Services.AddScoped<IStateRepository, BaseStateMaster>();
 builder.Services.AddScoped<ICityRepository, BaseCityMaster>();
 builder.Services.AddScoped<IReligionRepository, BaseReligionMaster>();
+builder.Services.AddScoped<ICasteRepository, BaseCasteMaster>();
 
 var app = builder.Build();
 
