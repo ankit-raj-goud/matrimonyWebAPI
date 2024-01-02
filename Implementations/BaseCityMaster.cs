@@ -35,6 +35,11 @@ namespace MatrimonyWebApi.Implementations
                     dbContext.CityMasters.Add(newRecord);
                     dbContext.SaveChanges();
 
+                    newRecord = dbContext.CityMasters
+                        .Include(inc => inc.StateMaster)
+                        .Include(inc => inc.StateMaster.Country)
+                        .FirstOrDefault(whr => whr.CityId == newRecord.CityId);
+
                     //response
                     var response = new CityMasterResponse
                     {
@@ -189,6 +194,11 @@ namespace MatrimonyWebApi.Implementations
 
                     dbContext.CityMasters.Update(existingRecord);
                     dbContext.SaveChanges();
+
+                    existingRecord = dbContext.CityMasters
+                        .Include(inc => inc.StateMaster)
+                        .Include(inc => inc.StateMaster.Country)
+                        .FirstOrDefault(whr => whr.CityId == existingRecord.CityId);
 
                     //response
                     var response = new CityMasterResponse

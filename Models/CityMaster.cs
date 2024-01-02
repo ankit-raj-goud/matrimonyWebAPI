@@ -14,5 +14,7 @@ namespace MatrimonyWebApi.Models
         public int StateIdRef { get; set; }
         public StateMaster StateMaster { get; set; }
 
+        public ICollection<Donation> Donations { get; set; }
+        public ICollection<Candidate> Candidates{ get; set; }
     }
 }

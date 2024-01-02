@@ -9,5 +9,7 @@ namespace MatrimonyWebApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GenderId { get; set; }
         public string? Gender { get; set; }
+
+        public ICollection<Candidate> Candidates { get; set; }
     }
 }

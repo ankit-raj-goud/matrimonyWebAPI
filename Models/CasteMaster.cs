@@ -13,5 +13,7 @@ namespace MatrimonyWebApi.Models
         [Required]        
         public Guid ReligionIdRef { get; set; }
         public ReligionMaster?  ReligionMaster{ get; set; }
+
+        public ICollection<Candidate> Candidates { get; set; }
     }
 }

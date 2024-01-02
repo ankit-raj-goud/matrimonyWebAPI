@@ -18,7 +18,7 @@ namespace MatrimonyWebApi.Models
         public string Description { get; set; }
 
         //city master ref
-        public int CityId { get; set; }
+        public int CityIdRef { get; set; }
         public CityMaster? CityMaster { get; set; }
     }
 }

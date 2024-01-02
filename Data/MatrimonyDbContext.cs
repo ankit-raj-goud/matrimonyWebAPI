@@ -138,6 +138,38 @@ namespace MatrimonyWebApi.Data
                 .WithOne(e => e.ReligionMaster)
                 .HasForeignKey(e => e.ReligionIdRef)
                 .IsRequired();
+
+            //donations 
+            modelBuilder.Entity<CityMaster>()
+                .HasMany(e => e.Donations)
+                .WithOne(e => e.CityMaster)
+                .HasForeignKey(e => e.CityIdRef)
+                .IsRequired();
+
+            //candidate master
+            modelBuilder.Entity<CityMaster>()
+                .HasMany(e => e.Candidates)
+                .WithOne(e => e.CityMaster)
+                .HasForeignKey(e => e.CityIdRef)
+                .IsRequired();
+
+            modelBuilder.Entity<CasteMaster>()
+                .HasMany(e => e.Candidates)
+                .WithOne(e => e.CasteMaster)
+                .HasForeignKey(e => e.CasteIdRef)
+                .IsRequired();
+
+            modelBuilder.Entity<GenderMaster>()
+                .HasMany(e => e.Candidates)
+                .WithOne(e => e.GenderMaster)
+                .HasForeignKey(e => e.GenderIdRef)
+                .IsRequired();
+
+            modelBuilder.Entity<CandidateLoginDetails>()
+                .HasOne<Candidate>(e => e.Candidate)
+                .WithMany(e => e.CandidateLoginDetails)
+                .HasForeignKey(e => e.CandidateIdRef)
+                .IsRequired();
         }
     }
 }
