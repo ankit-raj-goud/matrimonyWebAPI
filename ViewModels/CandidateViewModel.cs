@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using MatrimonyWebApi.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace MatrimonyWebApi.Models
+namespace MatrimonyWebApi.ViewModels
 {
-    public class Candidate
+    public class CandidateRequest
     {
-        [Key]
         public Guid CandidateId { get; set; }
         [Required]
         public string Name { get; set; }
 
         public string MiddleName { get; set; }
-
+        [Required]
         public string LastName { get; set; }
 
         public string Address { get; set; }
@@ -25,9 +24,8 @@ namespace MatrimonyWebApi.Models
         public double FamilyIncome { get; set; }
         public bool IsProfilePictureOpenVisible { get; set; }
         public string Description { get; set; }
-        public string DesiredPartnerDescription { get; set;}
+        public string DesiredPartnerDescription { get; set; }
         public string ContactPerson { get; set; }
-        [Required]
         public string ContactNumber { get; set; }
         public bool IsContactNumberOpen { get; set; }
         public float Height { get; set; }
@@ -38,32 +36,19 @@ namespace MatrimonyWebApi.Models
 
         //city ref
         public int CityIdRef { get; set; }
-        public CityMaster CityMaster { get; set; }
-
+        
         //caste ref
-        public Guid CasteIdRef { get; set; }
-        public CasteMaster CasteMaster { get; set; }
+        public Guid CasteIdRef { get; set; }        
 
         //gender ref
         public int GenderIdRef { get; set; }
-        public GenderMaster GenderMaster { get; set; }
-
-        public ICollection<CandidateLoginDetails> CandidateLoginDetails { get; set; }
-
+        
     }
 
-    public class CandidateLoginDetails
+    public class CandidateResponse : CandidateRequest
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        //candidate Id Ref
-        public Guid CandidateIdRef { get; set; }
-        
-        public Candidate Candidate { get; set; }
-
-        [Required]
-        public string Password { get; set; }
+        public string CityName { get; set; }
+        public string CasteName { get; set; }
+        public string GenderName { get; set; }
     }
 }

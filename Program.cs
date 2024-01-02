@@ -23,6 +23,7 @@ builder.Services.AddScoped<ICityRepository, BaseCityMaster>();
 builder.Services.AddScoped<IReligionRepository, BaseReligionMaster>();
 builder.Services.AddScoped<ICasteRepository, BaseCasteMaster>();
 builder.Services.AddScoped<IDonationRepository, BaseDonation>();
+builder.Services.AddScoped<ICandidateRepository, BaseCandidate>();
 
 var app = builder.Build();
 

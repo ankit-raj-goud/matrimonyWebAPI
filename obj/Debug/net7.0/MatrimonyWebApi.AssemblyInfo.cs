@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatrimonyWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8decdc66050307d4cd065e6310dc8c2209bbb7c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b0b8816796359d53d22939947724e601b408864")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatrimonyWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatrimonyWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

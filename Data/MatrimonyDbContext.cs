@@ -22,6 +22,7 @@ namespace MatrimonyWebApi.Data
         public DbSet<AdminMaster> AdminMasters{ get; set; }
         public DbSet<Donation> Donations { get; set; }
         public DbSet<InterestStatusMaster> InterestStatusMasters { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
 
         //seeding data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
