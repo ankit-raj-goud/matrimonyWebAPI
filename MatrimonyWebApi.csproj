@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\UserUploads\" />
   </ItemGroup>
 
 </Project>

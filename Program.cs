@@ -24,6 +24,8 @@ builder.Services.AddScoped<IReligionRepository, BaseReligionMaster>();
 builder.Services.AddScoped<ICasteRepository, BaseCasteMaster>();
 builder.Services.AddScoped<IDonationRepository, BaseDonation>();
 builder.Services.AddScoped<ICandidateRepository, BaseCandidate>();
+builder.Services.AddScoped<IInterestRepository, BaseInterest>();
+builder.Services.AddScoped<ICandidatePictureRepository, BaseCandidateProfilePicture>();
 
 var app = builder.Build();
 

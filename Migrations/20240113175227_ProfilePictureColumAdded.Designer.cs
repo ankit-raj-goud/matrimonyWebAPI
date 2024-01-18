@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatrimonyWebApi.Migrations
 {
     [DbContext(typeof(MatrimonyDbContext))]
-    [Migration("20240102142322_CandidateMasterAdded")]
-    partial class CandidateMasterAdded
+    [Migration("20240113175227_ProfilePictureColumAdded")]
+    partial class ProfilePictureColumAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,7 +149,7 @@ namespace MatrimonyWebApi.Migrations
 
                     b.HasIndex("GenderIdRef");
 
-                    b.ToTable("Candidate");
+                    b.ToTable("Candidates");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.CandidateLoginDetails", b =>
@@ -167,11 +167,39 @@ namespace MatrimonyWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateIdRef");
 
                     b.ToTable("CandidateLoginDetails");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.CandidateProfilePicture", b =>
+                {
+                    b.Property<int>("PictureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PictureId"));
+
+                    b.Property<Guid>("CandidateIdRef")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PictureType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PictureId");
+
+                    b.HasIndex("CandidateIdRef");
+
+                    b.ToTable("CandidateProfilePictures");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.CasteMaster", b =>
@@ -305,6 +333,37 @@ namespace MatrimonyWebApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MatrimonyWebApi.Models.Interest", b =>
+                {
+                    b.Property<int>("InterestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InterestId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InterestStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ReceiverIdRef")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SenderIdRef")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("InterestId");
+
+                    b.HasIndex("InterestStatusId");
+
+                    b.HasIndex("ReceiverIdRef");
+
+                    b.HasIndex("SenderIdRef");
+
+                    b.ToTable("Interests");
+                });
+
             modelBuilder.Entity("MatrimonyWebApi.Models.InterestStatusMaster", b =>
                 {
                     b.Property<int>("InterestStatusId")
@@ -371,6 +430,34 @@ namespace MatrimonyWebApi.Migrations
                             MaritialStatusId = 3,
                             MaritialStatus = "Divorced"
                         });
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
+
+                    b.Property<Guid>("CandidateIdRef")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("CandidateIdRef");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.ReligionMaster", b =>
@@ -453,6 +540,17 @@ namespace MatrimonyWebApi.Migrations
                     b.Navigation("Candidate");
                 });
 
+            modelBuilder.Entity("MatrimonyWebApi.Models.CandidateProfilePicture", b =>
+                {
+                    b.HasOne("MatrimonyWebApi.Models.Candidate", "Candidate")
+                        .WithMany("CandidateProfilePictures")
+                        .HasForeignKey("CandidateIdRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Candidate");
+                });
+
             modelBuilder.Entity("MatrimonyWebApi.Models.CasteMaster", b =>
                 {
                     b.HasOne("MatrimonyWebApi.Models.ReligionMaster", "ReligionMaster")
@@ -486,6 +584,42 @@ namespace MatrimonyWebApi.Migrations
                     b.Navigation("CityMaster");
                 });
 
+            modelBuilder.Entity("MatrimonyWebApi.Models.Interest", b =>
+                {
+                    b.HasOne("MatrimonyWebApi.Models.InterestStatusMaster", "InterestStatusMaster")
+                        .WithMany("Interests")
+                        .HasForeignKey("InterestStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MatrimonyWebApi.Models.Candidate", "ReceiverCandidate")
+                        .WithMany("ReceiverInterests")
+                        .HasForeignKey("ReceiverIdRef")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MatrimonyWebApi.Models.Candidate", "SenderCandidate")
+                        .WithMany("SenderInterests")
+                        .HasForeignKey("SenderIdRef")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("InterestStatusMaster");
+
+                    b.Navigation("ReceiverCandidate");
+
+                    b.Navigation("SenderCandidate");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.Notification", b =>
+                {
+                    b.HasOne("MatrimonyWebApi.Models.Candidate", "Candidate")
+                        .WithMany("Notifications")
+                        .HasForeignKey("CandidateIdRef");
+
+                    b.Navigation("Candidate");
+                });
+
             modelBuilder.Entity("MatrimonyWebApi.Models.StateMaster", b =>
                 {
                     b.HasOne("MatrimonyWebApi.Models.CountryMaster", "Country")
@@ -500,6 +634,14 @@ namespace MatrimonyWebApi.Migrations
             modelBuilder.Entity("MatrimonyWebApi.Models.Candidate", b =>
                 {
                     b.Navigation("CandidateLoginDetails");
+
+                    b.Navigation("CandidateProfilePictures");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("ReceiverInterests");
+
+                    b.Navigation("SenderInterests");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.CasteMaster", b =>
@@ -522,6 +664,11 @@ namespace MatrimonyWebApi.Migrations
             modelBuilder.Entity("MatrimonyWebApi.Models.GenderMaster", b =>
                 {
                     b.Navigation("Candidates");
+                });
+
+            modelBuilder.Entity("MatrimonyWebApi.Models.InterestStatusMaster", b =>
+                {
+                    b.Navigation("Interests");
                 });
 
             modelBuilder.Entity("MatrimonyWebApi.Models.ReligionMaster", b =>

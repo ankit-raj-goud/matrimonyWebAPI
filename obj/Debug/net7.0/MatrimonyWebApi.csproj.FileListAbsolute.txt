@@ -151,3 +151,4 @@ D:\Matrimony Project\MatrimonyWebApi\obj\Debug\net7.0\refint\MatrimonyWebApi.dll
 D:\Matrimony Project\MatrimonyWebApi\obj\Debug\net7.0\MatrimonyWebApi.pdb
 D:\Matrimony Project\MatrimonyWebApi\obj\Debug\net7.0\MatrimonyWebApi.genruntimeconfig.cache
 D:\Matrimony Project\MatrimonyWebApi\obj\Debug\net7.0\ref\MatrimonyWebApi.dll
+D:\Matrimony Project\MatrimonyWebApi\bin\Debug\net7.0\MatrimonyWebApi.staticwebassets.runtime.json

@@ -6,40 +6,41 @@ namespace MatrimonyWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CasteController : Controller
+    public class InterestController : Controller
     {
-        private readonly ICasteRepository repository;
+        private readonly IInterestRepository repository;
 
-        public CasteController(ICasteRepository repository)
+        public InterestController(IInterestRepository repository)
         {
             this.repository = repository;
         }
 
-        [HttpGet("GetAll")]        
-        public IActionResult GetAll()
+        [HttpGet]
+        [ActionName("GetAll")]
+        public IActionResult GetInterests(Guid? senderId = null, Guid? receiverId = null, int? statusId = null)
         {
             try
             {
-                var response = repository.GetAll();
+                var response = repository.GetInterests(senderId,receiverId,statusId);
                 return Ok(response);
-            }
+            }            
             catch (Exception ex)
             {
-                return StatusCode(500, "internal server error :" + ex.Message);
+                return StatusCode(500, "internal server error :" + ex.Message); 
             }
         }
 
         [ActionName("GetById")]
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetById(Guid id)
+        public IActionResult GetById(int id)
         {
             try
             {
                 var response = repository.GetById(id);
                 return Ok(response);
             }
-            catch (BadHttpRequestException ex)
+            catch (KeyNotFoundException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -49,31 +50,13 @@ namespace MatrimonyWebApi.Controllers
             }
         }
 
-        [ActionName("Create")]
+        [ActionName("SendInterest")]
         [HttpPost]
-        public IActionResult Create(CasteMasterRequest request)
+        public IActionResult SendInterest(InterestRequest request)
         {
             try
             {
-                var response = repository.Create(request);
-
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, "internal server error :" + ex.Message);
-            }
-        }
-
-        [ActionName("Delete")]
-        [HttpDelete]
-        [Route("{id:Guid}")]
-        public IActionResult Delete([FromRoute] Guid id)
-        {
-            try
-            {
-                var response = repository.Delete(id);
+                var response = repository.SendInterest(request);
 
                 return Ok(response);
             }
@@ -83,21 +66,22 @@ namespace MatrimonyWebApi.Controllers
             }
             catch (Exception ex)
             {
+
                 return StatusCode(500, "internal server error :" + ex.Message);
             }
         }
 
         [ActionName("Update")]
         [HttpPut]
-        public IActionResult Update(CasteMasterRequest request)
+        public IActionResult Update(InterestRequest request)
         {
             try
             {
-                var response = repository.Update(request);
+                var response = repository.UpdateInterest(request);
 
                 return Ok(response);
             }
-            catch (BadHttpRequestException ex)
+            catch (KeyNotFoundException ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -53,6 +53,17 @@ namespace MatrimonyWebApi.Implementations
                 dbContext.Candidates.Add(newRecord);
                 dbContext.SaveChanges();
 
+                //candidate login details
+                var newLoginDetailsRecord = new CandidateLoginDetails
+                {
+                    CandidateIdRef = newRecord.CandidateId,
+                    UserId = request.UserId,
+                    Password = request.Password,
+                };
+
+                dbContext.CandidateLoginDetails.Add(newLoginDetailsRecord);
+                dbContext.SaveChanges();
+
                 newRecord = GetCandidate(newRecord.CandidateId);
 
                 var response = GetCandidateResponse(newRecord);
@@ -171,7 +182,7 @@ namespace MatrimonyWebApi.Implementations
                     existingRecord.PersonalMonthlyIncome = request.PersonalMonthlyIncome;
                     existingRecord.CityIdRef = request.CityIdRef;
                     existingRecord.CasteIdRef = request.CasteIdRef;
-                    existingRecord.GenderIdRef = request.GenderIdRef;
+                    existingRecord.GenderIdRef = request.GenderIdRef;                    
 
                     dbContext.Candidates.Update(existingRecord);
                     dbContext.SaveChanges();
@@ -182,7 +193,7 @@ namespace MatrimonyWebApi.Implementations
                 }
                 else
                 {
-                    throw new BadHttpRequestException("invalid id");
+                    throw new BadHttpRequestException("invalid id !!");
                 }
             }
             catch (Exception)
@@ -216,6 +227,7 @@ namespace MatrimonyWebApi.Implementations
                     .Include(inc => inc.CasteMaster)
                     .Include(inc => inc.CityMaster)
                     .Include(inc => inc.GenderMaster)
+                    .Include(inc => inc.CandidateLoginDetails)
                     .FirstOrDefault(whr => whr.ContactNumber == contactNumber);
 
                 return record;
@@ -260,6 +272,8 @@ namespace MatrimonyWebApi.Implementations
                     CasteName = data.CasteMaster?.CasteName ?? string.Empty,
                     CityName = data.CityMaster?.CityName ?? string.Empty,
                     GenderName = data.GenderMaster?.Gender ?? string.Empty,
+                    UserId = data.CandidateLoginDetails?
+                    .FirstOrDefault(whr => whr.CandidateIdRef == data.CandidateId)?.UserId ?? string.Empty
                 };
 
                 return response;

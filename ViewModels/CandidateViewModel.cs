@@ -34,6 +34,13 @@ namespace MatrimonyWebApi.ViewModels
         public string Profession { get; set; }
         public double PersonalMonthlyIncome { get; set; }
 
+        //login info
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
         //city ref
         public int CityIdRef { get; set; }
         

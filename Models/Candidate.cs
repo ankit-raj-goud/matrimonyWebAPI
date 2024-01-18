@@ -50,6 +50,11 @@ namespace MatrimonyWebApi.Models
 
         public ICollection<CandidateLoginDetails> CandidateLoginDetails { get; set; }
 
+        public ICollection<Interest> SenderInterests { get; set; }
+        public ICollection<Interest> ReceiverInterests { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<CandidateProfilePicture> CandidateProfilePictures{ get; set; }
+
     }
 
     public class CandidateLoginDetails
@@ -62,6 +67,9 @@ namespace MatrimonyWebApi.Models
         public Guid CandidateIdRef { get; set; }
         
         public Candidate Candidate { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
 
         [Required]
         public string Password { get; set; }

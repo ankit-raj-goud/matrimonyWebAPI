@@ -23,6 +23,10 @@ namespace MatrimonyWebApi.Data
         public DbSet<Donation> Donations { get; set; }
         public DbSet<InterestStatusMaster> InterestStatusMasters { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<CandidateLoginDetails> CandidateLoginDetails { get; set; }
+        public DbSet<Interest> Interests { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<CandidateProfilePicture> CandidateProfilePictures { get; set; }
 
         //seeding data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -171,6 +175,42 @@ namespace MatrimonyWebApi.Data
                 .WithMany(e => e.CandidateLoginDetails)
                 .HasForeignKey(e => e.CandidateIdRef)
                 .IsRequired();
+
+            //interest 
+            modelBuilder.Entity<Candidate>()
+                .HasMany(e => e.SenderInterests)
+                .WithOne(e => e.SenderCandidate)                
+                .HasForeignKey(e => e.SenderIdRef)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Candidate>()
+                .HasMany(e => e.ReceiverInterests)
+                .WithOne(e => e.ReceiverCandidate)
+                .HasForeignKey(e => e.ReceiverIdRef)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<InterestStatusMaster>()
+                .HasMany(e => e.Interests)
+                .WithOne(e => e.InterestStatusMaster)
+                .HasForeignKey(e => e.InterestStatusId)
+                .IsRequired();
+
+            //notifications 
+            modelBuilder.Entity<Notification>()
+                .HasOne(e => e.Candidate)
+                .WithMany(e => e.Notifications)
+                .HasForeignKey(e => e.CandidateIdRef)
+                .IsRequired(false);
+
+            //profile picture
+            modelBuilder.Entity<Candidate>()
+                .HasMany(e => e.CandidateProfilePictures)
+                .WithOne(e => e.Candidate)
+                .HasForeignKey(e => e.CandidateIdRef)
+                .IsRequired();
+
         }
     }
 }

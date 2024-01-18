@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MatrimonyWebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class dbChanges : Migration
+    public partial class dbChanges2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -150,6 +150,58 @@ namespace MatrimonyWebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Candidates",
+                columns: table => new
+                {
+                    CandidateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubCaste = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FatherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MotherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FamilyType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FamilyIncome = table.Column<double>(type: "float", nullable: false),
+                    IsProfilePictureOpenVisible = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DesiredPartnerDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsContactNumberOpen = table.Column<bool>(type: "bit", nullable: false),
+                    Height = table.Column<float>(type: "real", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Profession = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonalMonthlyIncome = table.Column<double>(type: "float", nullable: false),
+                    CityIdRef = table.Column<int>(type: "int", nullable: false),
+                    CasteIdRef = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GenderIdRef = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Candidates", x => x.CandidateId);
+                    table.ForeignKey(
+                        name: "FK_Candidates_CasteMasters_CasteIdRef",
+                        column: x => x.CasteIdRef,
+                        principalTable: "CasteMasters",
+                        principalColumn: "CasteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Candidates_CityMasters_CityIdRef",
+                        column: x => x.CityIdRef,
+                        principalTable: "CityMasters",
+                        principalColumn: "CityId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Candidates_GenderMasters_GenderIdRef",
+                        column: x => x.GenderIdRef,
+                        principalTable: "GenderMasters",
+                        principalColumn: "GenderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Donations",
                 columns: table => new
                 {
@@ -159,17 +211,69 @@ namespace MatrimonyWebApi.Migrations
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    CityMasterCityId = table.Column<int>(type: "int", nullable: true)
+                    CityIdRef = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Donations", x => x.DonationId);
                     table.ForeignKey(
-                        name: "FK_Donations_CityMasters_CityMasterCityId",
-                        column: x => x.CityMasterCityId,
+                        name: "FK_Donations_CityMasters_CityIdRef",
+                        column: x => x.CityIdRef,
                         principalTable: "CityMasters",
-                        principalColumn: "CityId");
+                        principalColumn: "CityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CandidateLoginDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CandidateIdRef = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CandidateLoginDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CandidateLoginDetails_Candidates_CandidateIdRef",
+                        column: x => x.CandidateIdRef,
+                        principalTable: "Candidates",
+                        principalColumn: "CandidateId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Interests",
+                columns: table => new
+                {
+                    InterestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderIdRef = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverIdRef = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InterestStatusId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Interests", x => x.InterestId);
+                    table.ForeignKey(
+                        name: "FK_Interests_Candidates_ReceiverIdRef",
+                        column: x => x.ReceiverIdRef,
+                        principalTable: "Candidates",
+                        principalColumn: "CandidateId");
+                    table.ForeignKey(
+                        name: "FK_Interests_Candidates_SenderIdRef",
+                        column: x => x.SenderIdRef,
+                        principalTable: "Candidates",
+                        principalColumn: "CandidateId");
+                    table.ForeignKey(
+                        name: "FK_Interests_InterestStatusMasters_InterestStatusId",
+                        column: x => x.InterestStatusId,
+                        principalTable: "InterestStatusMasters",
+                        principalColumn: "InterestStatusId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -218,6 +322,26 @@ namespace MatrimonyWebApi.Migrations
                 values: new object[] { new Guid("08c6ab3b-97df-4959-8390-e676d35b8ceb"), "Hindu" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CandidateLoginDetails_CandidateIdRef",
+                table: "CandidateLoginDetails",
+                column: "CandidateIdRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Candidates_CasteIdRef",
+                table: "Candidates",
+                column: "CasteIdRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Candidates_CityIdRef",
+                table: "Candidates",
+                column: "CityIdRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Candidates_GenderIdRef",
+                table: "Candidates",
+                column: "GenderIdRef");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CasteMasters_ReligionIdRef",
                 table: "CasteMasters",
                 column: "ReligionIdRef");
@@ -228,9 +352,24 @@ namespace MatrimonyWebApi.Migrations
                 column: "StateIdRef");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Donations_CityMasterCityId",
+                name: "IX_Donations_CityIdRef",
                 table: "Donations",
-                column: "CityMasterCityId");
+                column: "CityIdRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Interests_InterestStatusId",
+                table: "Interests",
+                column: "InterestStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Interests_ReceiverIdRef",
+                table: "Interests",
+                column: "ReceiverIdRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Interests_SenderIdRef",
+                table: "Interests",
+                column: "SenderIdRef");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StateMasters_CountryIdRef",
@@ -245,25 +384,34 @@ namespace MatrimonyWebApi.Migrations
                 name: "AdminMasters");
 
             migrationBuilder.DropTable(
-                name: "CasteMasters");
+                name: "CandidateLoginDetails");
 
             migrationBuilder.DropTable(
                 name: "Donations");
 
             migrationBuilder.DropTable(
-                name: "GenderMasters");
-
-            migrationBuilder.DropTable(
-                name: "InterestStatusMasters");
+                name: "Interests");
 
             migrationBuilder.DropTable(
                 name: "MaritialStatusMasters");
 
             migrationBuilder.DropTable(
-                name: "ReligionMasters");
+                name: "Candidates");
+
+            migrationBuilder.DropTable(
+                name: "InterestStatusMasters");
+
+            migrationBuilder.DropTable(
+                name: "CasteMasters");
 
             migrationBuilder.DropTable(
                 name: "CityMasters");
+
+            migrationBuilder.DropTable(
+                name: "GenderMasters");
+
+            migrationBuilder.DropTable(
+                name: "ReligionMasters");
 
             migrationBuilder.DropTable(
                 name: "StateMasters");

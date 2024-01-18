@@ -9,5 +9,7 @@ namespace MatrimonyWebApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InterestStatusId { get; set; }
         public string InterestStatus { get; set; }
+
+        public ICollection<Interest> Interests { get; set; }
     }
 }
